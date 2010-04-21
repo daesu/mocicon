@@ -1,0 +1,65 @@
+<head>
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<title>MocIcon - A Moc Tray Icon</title>
+<body>
+<img src="icon.png" style="float:left" alt="music icon"><h1>MocIcon</h1>
+<p>
+MocIcon is a simple <a href="http://moc.daper.net">Music On Console</a> tray icon. Inspired originally by Moc-Tray,
+I decided to write this in C because Perl isn't as light language as C and is not really suited for lightweight desktop usage.
+It is written using the GTK+ toolkit and has a very small compile size (under 100 lines of code). I am trying to keep the memory
+usage down but the icons + GTK use almost almost all of it.
+</p>
+
+<h3>Features</h3>
+<h5>Completed</h5>
+<ul>
+<li>basic GTK+ tray icon</li>
+<li>start/stop server</li>
+<li>play/pause buttons</li>
+<li>skip/go back songs</li>
+<li>launch mocp in xterm</li>
+<li>notify-send integration</li>
+<li>icons in menu</li>
+<li>simpler click scheme</li>
+<ul>
+<li>left click for pause/play</li>
+<li>right click for regular menu</li>
+<li>middle click for notify-send</li>
+</ul>
+</ul>
+<h5>In Progress/Not Started</h5>
+<ul>
+<li>code cleanups are always needed</li>
+<li>mouseover for current song (now is middle click, not mouseover)</li>
+<li>playlist selection and basic support</li>
+</ul>
+
+
+
+<h3>Download Source</h3>
+<p>
+the source code is available under the Simplified BSD License.<br>
+<a href="https://sourceforge.net/projects/mocicon/files/mocicon-0.1.4.tar.bz2/download">Mocicon 0.1.4.tar.bz2</a><br>
+<a href="https://sourceforge.net/projects/mocicon/files/mocicon-0.1.2.tar.bz2/download">MocIcon 0.1.2.tar.bz2</a><br>
+<a href="https://sourceforge.net/projects/mocicon/files/mocicon-0.1.1.tar.bz2/download">MocIcon 0.1.1.tar.bz2</a><br>
+<a href="https://sourceforge.net/projects/mocicon/files/mocicon-0.1.tar.bz2/download">MocIcon 0.1.tar.bz2</a><br>
+</p>
+<p>
+I've also written a PKGBUILD for <a href="http://archlinux.org">ArchLinux</a> and have started packaging it.<br>
+<a href="http://aur.archlinux.org/packages.php?ID=36065">PKGBUILD</a><br>
+<a href="source/mocicon-0.1.4-5-x86_64.pkg.tar.gz">https://sourceforge.net/projects/mocicon/files/mocicon-0.1.4-5-x86_64.pkg.tar.gz/download</a><br>
+</p>
+    
+<h3>The Obligatory Screenshot</h3>
+<p>
+<img src="screen2.png"><br>
+Now with Icons! w00t! :)
+</p>
+
+<h3>Contact/Bugsquashing/Etc</h3>
+<p>
+If you have any questions concerns, bugs to squash, things to discuss, ideas, patches! all things will be gladly accepted you can email me at MutantTurkey@gmail.com
+</p>
+
+<p><font size=1> &copy; Calvin Morrison 2009.</font></p>
+
