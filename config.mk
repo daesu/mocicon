@@ -1,5 +1,5 @@
 # mocicon version
-VERSION = 0.1.4
+VERSION = 0.1.5
 
 # Customize below to fit your system
 
@@ -17,7 +17,7 @@ INCS = -I. -I/usr/include ${GTKINC}
 LIBS = -L/usr/lib -lc ${GTKLIB}
 # flags
 CPPFLAGS = -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
-CFLAGS = -std=c99 -O2 ${INCS} ${CPPFLAGS}
+CFLAGS = -std=c99 -Wall -O2 ${INCS} ${CPPFLAGS}
 LDFLAGS = -s ${LIBS}
 
 # Solaris
