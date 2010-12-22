@@ -3,9 +3,10 @@
 #include <gtk/gtk.h> 
 
 //static char *notify = "bash -c 'notify-send -t 2000 \"$(mocp -Q %artist)\" \"$(mocp -Q %song)\" -i gtk-cdrom'";
-static gchar *temp;
-//static char *notify = "bash -c echo \"$(mocp -Q %artist)$(mocp -Q %song)\" ";
+static char *notify = "bash -c 'notify-send -t 2000 \"$(mocp -i 2>/dev/null | grep Artist)\" \"$(mocp -i 2>/dev/null | grep Song)\" -i gtk-cdrom'";
+//static char *notify = "bash -c 'notify-send -t 2000 \"$(mocp -i)\" -i gtk-cdrom";
 GtkWidget *menu, *quit_item, *launch_item, *play_item, *stop_item, *start_item, *next_item, *prev_item; 
+static gchar *temp;
 
 
 
@@ -21,30 +22,22 @@ GtkWidget *menu, *quit_item, *launch_item, *play_item, *stop_item, *start_item, 
 		g_free(stdoutput);
 		return (char *)temp;
 }*/
-static void send( GtkMenuItem *item, gpointer data) {
+static void send( GtkMenuItem *item, int data) {
 
-
-		switch(GPOINTER_TO_INT(data)) {
-			case 0:
-				g_spawn_command_line_async("mocp --play", NULL);
+		switch(data) {
+			case 0: g_spawn_command_line_async("mocp --play", NULL);
 					break;
-			case 1:
-				g_spawn_command_line_async("mocp --toggle-pause", NULL);
+			case 1: g_spawn_command_line_async("mocp --toggle-pause", NULL);
 					break;
-			case 2:
-				g_spawn_command_line_async("mocp --exit", NULL);
+			case 2:	g_spawn_command_line_async("mocp --exit", NULL);
 					break;
-			case 3:
-				g_spawn_command_line_async("mocp --next", NULL);
+			case 3:	g_spawn_command_line_async("mocp --next", NULL);
 					break;
-			case 4:
-				g_spawn_command_line_async("mocp --previous", NULL);
+			case 4:	g_spawn_command_line_async("mocp --previous", NULL);
 					break;
-			case 5: 				
-			 g_spawn_command_line_async(notify, NULL);			
+			case 5: g_spawn_command_line_async(notify, NULL);			
 					break;
-			case 6:
-				g_spawn_command_line_async("xterm -C mocp", NULL);
+			case 6:	g_spawn_command_line_async("xterm -C mocp", NULL);
 					break;
 			case 7:
 
@@ -66,17 +59,19 @@ static void send( GtkMenuItem *item, gpointer data) {
 gboolean button_press_cb(GtkStatusIcon *icon, GdkEventButton *ev, gpointer user_data) 
 {  
 	// I am not entirely sure what to do, double click implementation is possible. say double  click to get info. single click just pause/plays. but it will STILL register the first click, so it would pause and then give info.
-    { 
-    if(ev->button == 3)
-         gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, ev->button, ev->time); 
+     
+    if(ev->button == 3) { 
+         gtk_menu_popup(GTK_MENU(menu), NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL, 
+                                        ev->button, 
+                                        ev->time); 
     } 
-      if(ev->button == 2) {
-	send(NULL, GINT_TO_POINTER( 5 ));
-} 
-    if(ev->button == 1)  { 
-		send(NULL, GINT_TO_POINTER( 1 ));
-			}	
-	return FALSE;
+    if(ev->button == 2) { send(NULL, 5); }
+    if(ev->button == 1) {	send(NULL, 1); }	
+	
+  return FALSE;
 } 
 
 static void setup() {
@@ -86,8 +81,6 @@ static void setup() {
 	g_signal_connect(icon,"button-press-event", G_CALLBACK(button_press_cb), NULL); 
 	//tooltip
 
-	
-	
 	menu = gtk_menu_new(); 
 		// Create Items
 	 start_item = gtk_image_menu_item_new_with_label("Start Server");
