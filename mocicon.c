@@ -2,6 +2,7 @@
 //compile with gcc -Wall -g mocicon.c -o mocicon `pkg-config --cflags --libs gtk+-2.0`
 #include <gtk/gtk.h> 
 
+#define TERMINAL "xterm -C mocp"
 
 //CONFIG ::: user defined information 
 //static char *notify = "bash -c 'notify-send -t 2000 \"$(mocp -i)\" -i gtk-cdrom";
@@ -39,40 +40,25 @@ static void send( GtkMenuItem *item, int data) {
 					break;
 			case 5: g_spawn_command_line_async(notify, NULL);			
 					break;
-			case 6:	g_spawn_command_line_async("xterm -C mocp", NULL);
+			case 6:	g_spawn_command_line_async(TERMINAL, NULL);
 					break;
 			case 7:
-
     //	    	dialog = gtk_file_chooser_dialog_new( "Select file",  NULL, GTK_FILE_CHOOSER_ACTION_SAVE, GTK_STOCK_SAVE, 1, GTK_STOCK_CANCEL, 0, NULL ); 
     //          gtk_dialog_run( GTK_DIALOG( dialog ));
     //    playlist = gtk_file_chooser_get_filename( GTK_FILE_CHOOSER( dialog ) ); 
 		//g_spawn_command_line_sync("mocp -c",  NULL, NULL, NULL, NULL);
 		//g_spawn_command_line_sync(g_strconcat("mocp -a ", playlist),  NULL, NULL, NULL, NULL);
 		//g_spawn_command_line_sync("mocp -p",  NULL, NULL, NULL, NULL);        
-
 				break;
 		default:
 				break;
 		}
-		//g_free(temp);
 }
-
 gboolean button_press_cb(GtkStatusIcon *icon, GdkEventButton *ev, gpointer user_data) 
 {  
-	// I am not entirely sure what to do, double click implementation is possible. 
-  // if the double  click was to get info, then the single click just pause/plays.
-  // but it will STILL register the first click before the double, so it would pause 
-  // and then give info, which is not gonna work.
   
   // CONFIG ::: user defined mouseclicks   
-    if(ev->button == 3) { 
-         gtk_menu_popup(GTK_MENU(menu), NULL,
-                                        NULL,
-                                        NULL,
-                                        NULL, 
-                                        ev->button, 
-                                        ev->time); 
-    } 
+    if(ev->button == 3) { gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, ev->button, ev->time); } 
     if(ev->button == 2) { send(NULL, 5); }
     if(ev->button == 1) {	send(NULL, 1); }	
 	
@@ -81,20 +67,18 @@ gboolean button_press_cb(GtkStatusIcon *icon, GdkEventButton *ev, gpointer user_
 
 static void setup() {
 	GtkStatusIcon *icon; 
-	//gchar *querychar=NULL;
 	icon = gtk_status_icon_new_from_stock(GTK_STOCK_MEDIA_PLAY); 
 	g_signal_connect(icon,"button-press-event", G_CALLBACK(button_press_cb), NULL); 
-	//tooltip
 
 	menu = gtk_menu_new(); 
   // init items
-	 start_item = gtk_image_menu_item_new_with_label("Start Server");
-	 stop_item  = gtk_image_menu_item_new_with_label("Stop Server");
-	 next_item  = gtk_image_menu_item_new_with_label("Next");
-	 prev_item  = gtk_image_menu_item_new_with_label("Previous");
-	 play_item  = gtk_image_menu_item_new_with_label("Play/Pause");
-	 launch_item = gtk_image_menu_item_new_with_label("Launch Moc");
-	 quit_item  = gtk_image_menu_item_new_with_label("Quit MocIcon");
+  start_item = gtk_image_menu_item_new_with_label("Start Server");
+	stop_item  = gtk_image_menu_item_new_with_label("Stop Server");
+	next_item  = gtk_image_menu_item_new_with_label("Next");
+	prev_item  = gtk_image_menu_item_new_with_label("Previous");
+	play_item  = gtk_image_menu_item_new_with_label("Play/Pause");
+	launch_item = gtk_image_menu_item_new_with_label("Launch Moc");
+	quit_item  = gtk_image_menu_item_new_with_label("Quit MocIcon");
 	
   // Comment this section out if you don't want icons.
   // CONFIG::: icons size, icons on/off 
@@ -116,16 +100,16 @@ static void setup() {
         
 	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), stop_item); 
 	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), start_item); 
-  	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), play_item); 
+   gtk_menu_shell_append(GTK_MENU_SHELL(menu), play_item); 
 	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), next_item); 	
 	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), prev_item); 
 	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), launch_item); 	
 	 gtk_menu_shell_append(GTK_MENU_SHELL(menu), quit_item); 
  	 // show widgets
         gtk_widget_show_all(menu);
+        
 };
  
-
 gint main(gint argc, gchar **argv) 
 { 
     gtk_init(&argc, &argv); 
