@@ -12,7 +12,7 @@ if [ "$ACTION" == 'pause/play' ]; then
 fi
 
 if [ "$ACTION" == 'next' ]; then
- mocp -f  
+  mocp -f  
 fi
 
 if [ "$ACTION" == 'previous' ]; then
@@ -20,27 +20,28 @@ if [ "$ACTION" == 'previous' ]; then
 fi
 
 if [ "$ACTION" == 'start' ]; then
- mocp -S
- dmenu_mocp
+  mocp -S
+  dmenu_mocp
 fi
 
 if [ "$ACTION" == 'exit' ]; then
- mocp -x
+  mocp -x
 fi
 
 if [ "$ACTION" == 'open' ]; then 
- xterm -e mocp
+  xterm -e mocp
 fi
 
 if [ "$ACTION" == 'load' ]; then
-    mocp -c &&
-  play=$(find ~/ -name *.m3u | dmenu -i $*)
+  mocp -c &&
+  play=`find ~/ -name *.m3u | dmenu -i $*`
   echo $play
   mocp -a "$play"
-    mocp -p
+  mocp -p
 fi
+
 if [ "$ACTION" == 'shuffle' ]; then
- mocp -t shuffle
+  mocp -t shuffle
 fi
 
 if [ "$ACTION" == 'repeat' ]; then
